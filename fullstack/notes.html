@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #191938;
+            color: #333;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color:#000022;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        
+        h1 {
+            text-align: center;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-size: 50px;
+            font-weight: bold;
+            font-style: normal;
+            color: #f0ecec;
+            text-shadow: 2px 2px 8px #050505;
+        }
+        
+        input[type="text"] {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        button {
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: rgba(85, 85, 85, 0.5);
+            color: #faf6f6;
+            border: 2px solid #0f0f0f;
+            border-radius: 50px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+            box-shadow: 0px 16px 26px rgba(0, 0, 0, 0.5);
+            width: 140px; /* Adjust width to fit 5 buttons per row */
+        
+        }
+        
+        button:hover {
+            background-color: rgba(85, 85, 85, 0.8);
+            box-shadow: 4px 20px 30px rgba(0, 0, 0, 0.7);
+            transform: scale(1.1);
+            border: 1px solid #f0eded;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            background-color: #eee;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .delete-btn {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Notes App</h1>
+        <input type="text" id="noteInput" placeholder="Enter your note here">
+        <button onclick="addNote()">Add Note</button>
+        <ul id="notesList"></ul>
+    </div>
+    <script>
+        // app.js
+
+// Function to add a note
+function addNote() {
+    const noteInput = document.getElementById('noteInput');
+    const notesList = document.getElementById('notesList');
+    const noteText = noteInput.value;
+
+    if (noteText.trim() !== '') {
+        const li = document.createElement('li');
+        li.textContent = noteText;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.classList.add('delete-btn');
+        deleteBtn.onclick = function () {
+            notesList.removeChild(li);
+            saveNotes();
+        };
+
+        li.appendChild(deleteBtn);
+        notesList.appendChild(li);
+
+        noteInput.value = '';
+
+        saveNotes();
+    }
+}
+
+// Load notes from localStorage when the page is loaded
+window.onload = function () {
+    const notesList = document.getElementById('notesList');
+    const savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
+
+    savedNotes.forEach(noteText => {
+        const li = document.createElement('li');
+        li.textContent = noteText;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.classList.add('delete-btn');
+        deleteBtn.onclick = function () {
+            notesList.removeChild(li);
+            saveNotes();
+        };
+
+        li.appendChild(deleteBtn);
+        notesList.appendChild(li);
+    });
+}
+
+// Save notes to localStorage whenever a note is added or deleted
+function saveNotes() {
+    const notesList = document.getElementById('notesList');
+    const notes = [];
+    for (let i = 0; i < notesList.children.length; i++) {
+        notes.push(notesList.children[i].textContent.replace('Delete', '').trim());
+    }
+    localStorage.setItem('notes', JSON.stringify(notes));
+}
+
+    </script>
+</body>
+</html>

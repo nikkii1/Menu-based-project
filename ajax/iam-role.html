@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create IAM Role</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <style>
+        #button {
+            background-color: #555;
+            color: white;
+            height: 40px;
+            width: 120px;
+            border-radius: 10px;
+            cursor: pointer; /* Add cursor style to indicate clickable button */
+        }
+
+        body {
+            background-color: #191938;
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            height: 100vh;
+            margin: 0; /* Remove default body margin */
+            display: flex; /* Use flexbox to center content vertically */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+        }
+
+        
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 18px 26px rgba(10, 10, 10, 0.1);
+            background-color: #000022;
+            max-width: 80%; /* Limit width of container */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px; /* Add margin above the form */
+        }
+
+        label,
+        input,
+        button {
+            width: 100%;
+            max-width: 300px;
+            margin: 5px 0; /* Increase margin between elements */
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid #ccc; /* Add border to input fields */
+            padding: 5px; /* Add padding inside input fields */
+        }
+        #button:hover{
+            background-color: #333;
+            transform: scale(1.1);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px; /* Add space below heading */
+        }
+
+        #status {
+            margin-top: 20px; /* Add space above status message */
+            text-align: center;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="color: #ccc;">Create IAM Role</h2>
+        <form id="createRoleForm">
+            <label for="role_name" style="color: #ccc;">Role Name:</label>
+            <input type="text" id="role_name" name="role_name" required placeholder="Enter the Role Name"><br><br>
+            <button type="submit" id="button">Create Role</button>
+        </form>
+
+        <div id="status"></div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#createRoleForm').submit(function(event) {
+                event.preventDefault();
+
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/cgi-bin/create_iam_role.py',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#status').html('<p>' + response.message + '</p>');
+                    },
+                    error: function(xhr, status, error) {
+                        $('#status').html('<p>Error creating role: ' + error + '</p>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

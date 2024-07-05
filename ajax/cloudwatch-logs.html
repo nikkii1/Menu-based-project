@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CloudWatch Logs</title>
+    <style>
+        body {
+           background-color: #191938;
+           color: white;
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            height: 100vh;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+
+
+        #container {
+            text-align: center;
+            padding-top: 50px;
+            background-color: #000022;
+            color: white;
+            width: 50%;
+            height: 60%;
+            margin-left: 25%;
+            margin-top: 5%;
+            border-radius: 10px;
+        }
+
+        input {
+            margin: 10px;
+            width: 50%;
+            height: 25px;
+            border-radius: 5px;
+            border: 1px solid #353535;
+            padding: 5px;
+        }
+
+        #btn {
+            background-color: #555;
+            color: #fff;
+            border: none;
+            height: 30px;
+            border-radius: 5px;
+            width: 150px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+        }
+
+        #btn:hover {
+            background-color: #333;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        #logs {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #logs h2 {
+            color: #333;
+        }
+
+        #logs ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #logs li {
+            background: rgba(255, 255, 255, 0.8);
+            margin: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            width: 90%;
+            max-width: 600px;
+        }
+    </style>
+    <script>
+        function fetchLogs() {
+            var form = document.getElementById('logsForm');
+            var formData = new FormData(form);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/cgi-bin/get_cloudwatch_logs.py", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    try {
+                        var data = JSON.parse(xhr.responseText);
+                        var output = "";
+                        if (Array.isArray(data)) {
+                            output += "<h2>CloudWatch Logs</h2><ul>";
+                            data.forEach(function(log) {
+                                output += "<li>Timestamp: " + new Date(log.timestamp).toLocaleString() + "<br>Message: " + log.message + "</li>";
+                            });
+                            output += "</ul>";
+                        } else if (data.error) {
+                            output += "<h2>Error</h2><p>" + data.error + "</p>";
+                        } else {
+                            output += "<h2>Unexpected Response</h2><pre>" + JSON.stringify(data, null, 2) + "</pre>";
+                        }
+                        document.getElementById("logs").innerHTML = output;
+                    } catch (e) {
+                        document.getElementById("logs").innerHTML = "Error parsing JSON: " + e.message;
+                    }
+                }
+            };
+            xhr.send(formData);
+        }
+    </script>
+</head>
+<body>
+    <div id="container">
+        <h1>Enter CloudWatch Logs Parameters</h1>
+        <form id="logsForm" onsubmit="event.preventDefault(); fetchLogs();">
+            <input type="text" id="log_group_name" name="log_group_name" placeholder="Log Group Name" required><br>
+            <input type="text" id="log_stream_name" name="log_stream_name" placeholder="Log Stream Name" required><br>
+            <input type="text" id="region_name" name="region_name" placeholder="Region" required><br>
+            <input type="submit" id="btn" value="Fetch Logs">
+        </form>
+        <div id="logs">
+            <p>Logs will be displayed here...</p>
+        </div>
+    </div>
+</body>
+</html>

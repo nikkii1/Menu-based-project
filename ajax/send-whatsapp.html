@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send WhatsApp Message</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #191938;
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            height: 100vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        form {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            border-radius: 8px;
+            background: none;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #1b1b1b;
+            box-sizing: border-box;
+        }
+
+        #submit {
+            width: 50%;
+            background-color: #555;
+            color: white;
+            padding: 5px;
+            font-size: 14px;
+            border: none;
+            border-radius: 10px;
+            display: block;
+            margin: 20px auto 0;
+            /* Center the button */
+            height: 40px;
+            width: 150px;
+        }
+
+        #submit:hover {
+            transform: scale(1.1);
+            background-color: #333;
+        }
+
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: none;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            text-align: center;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-size: 36px;
+            font-weight: bold;
+            color: #fffefe;
+            text-shadow: 2px 2px 8px #0a0a0a;
+        }
+        #whatsappForm{
+            background-color: #000022;
+            color: white;
+            width: 50%;
+            height: 70%;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="whatsappForm">
+        <h2>Send WhatsApp Message</h2>
+        <label for="from">From:</label>
+        <input type="text" id="from" placeholder="Enter mobile No." name="from" required>
+        <label for="to">To:</label>
+        <input type="text" id="to" name="to"  placeholder="Enter mobile No." required>
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message" placeholder="write your message" required>
+        <input id="submit" type="submit" value="Send Message">
+    </form>
+    <div id="response"></div>
+
+    <script>
+        document.getElementById("whatsappForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/cgi-bin/send_whatsapp.py", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        document.getElementById("response").innerHTML = "Message successfully sent";
+                    } else {
+                        document.getElementById("response").innerHTML = "Error: " + xhr.statusText;
+                    }
+                }
+            };
+            xhr.send(formData);
+        });
+    </script>
+</body>
+
+</html>

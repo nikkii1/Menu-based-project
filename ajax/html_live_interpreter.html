@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live HTML Interpreter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+           background-color: #000022;
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 40px); /* Adjust for header height */
+        }
+
+        .editor-container {
+            flex: 1;
+            display: flex;
+        }
+
+        .editor {
+            flex: 1;
+            padding: 20px;
+            border-right: 1px solid #ccc;
+            box-sizing: border-box;
+            overflow-y: auto;
+            background: #191938;
+            border-radius: 10px;
+            margin-top: 50px;
+            margin-left: 50px;
+            height: 500px;
+            width: 500px;
+            margin-right: 50px;
+            color: white;
+
+        }
+
+        .output {
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            background: #191938;
+            border-radius: 10px;
+            margin-top: 50px;
+            margin-right: 50px;
+            color: white;
+            height: 500px;
+            width: 500px; /* Adjust for padding */
+        }
+        h1 {
+            text-align: center;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            /* Use custom font from Google Fonts */
+            font-size: 36px;
+            /* Change font size */
+            font-weight: bold;
+            /* Change font weight */
+            font-style: normal;
+            /* Change font style */
+            color: #fcf6f6;
+            text-shadow: 2px 2px 8px #050505;
+
+
+        }
+    </style>
+</head>
+<body>
+    <!-- Main content -->
+     <h1>HTML Editor</h1>
+    <div class="container">
+        <div class="editor-container">
+            <div class="editor" contenteditable="true" id="htmlInput">
+
+            </div>
+            <div class="output" id="htmlOutput"> 
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to update output with user input HTML
+        function updateOutput() {
+            var htmlInput = document.getElementById('htmlInput').innerText;
+            var htmlOutput = document.getElementById('htmlOutput');
+            htmlOutput.innerHTML = htmlInput;
+        }
+
+        // Update output on input change
+        document.getElementById('htmlInput').addEventListener('input', updateOutput);
+    </script>
+</body>
+</html>

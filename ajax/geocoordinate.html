@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Geolocation Finder</title>
+    <style>
+        body {
+           background-color: #191938;
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            height: 100vh;
+        }
+
+        #container {
+            margin-left: 25%;
+            text-align: center;
+            padding-top: 100px;
+            background-color: #000022;
+            width: 50%;
+            height:50% ;
+            border-radius: 15px;
+        }
+
+        #address {
+            margin: 10px;
+            width: 60%;
+            height: 25px;
+            border-radius: 5px;
+            border: 1px solid #0a0a0a;
+        }
+
+        h1{
+            color: white;
+        }
+        #btn {
+            background-color: #555;
+            color: #fff;
+            border: none;
+            height: 32px;
+            border-radius: 10px;
+            width: 30%px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+            border: 1px solid white;
+        }
+
+        #btn:hover {
+            background-color: #333;
+            color: #fff;
+            transform: scale(1.1);
+        }
+ 
+        pre {
+            text-align: center;
+            
+        } 
+    </style>
+    <script>
+        function fetchLocation() {
+            let address = document.getElementById('address').value;
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', `/cgi-bin/geo_location.py?address=${encodeURIComponent(address)}`, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let response = JSON.parse(xhr.responseText);
+                    if (response.error) {
+                        document.getElementById('output').innerText = `Error: ${response.error}`;
+                    } else {
+                        document.getElementById('output').innerText = `Address: ${response.address}\nLatitude: ${response.latitude}\nLongitude: ${response.longitude}`;
+                    }
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</head>
+
+<body>
+    <h1 style="text-align: center;">Geolocation Finder</h1>
+    <div id="container">
+        <input type="text" id="address" placeholder="Enter address">
+        <button id="btn" onclick="fetchLocation()">Get Location</button>
+        <pre id="output" style="color: white;"></pre>
+    </div>
+</body>
+
+</html>

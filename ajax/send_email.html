@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Email Sender</title>
+    <style>
+        body {
+            background-color: #191938;
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            height: 100vh;
+            color: white;
+        }
+
+
+        #container {
+            background-color: #000022;
+            color: white;
+            text-align: center;
+            padding-top: 50px;
+            width: 50%;
+            height: 70%;
+            border-radius: 15px;
+            margin-left: 25%;
+
+        }
+
+        input, textarea {
+            margin: 10px;
+            width: 50%;
+            height: 25px;
+            border-radius: 5px;
+            border: 1px solid #0f0f0f;
+            padding: 5px;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        #btn {
+            background-color: #555;
+            color: #fff;
+            border: none;
+            height: 30px;
+            border-radius: 5px;
+            width: 100px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+        }
+
+        #btn:hover {
+            background-color: #333;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        pre {
+            text-align: center;
+
+        }
+    </style>
+    <script>
+        function sendEmail() {
+            let sender_email = document.getElementById('sender_email').value;
+            let receiver_email = document.getElementById('receiver_email').value;
+            let password = document.getElementById('password').value;
+            let subject = document.getElementById('subject').value;
+            let body = document.getElementById('body').value;
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/cgi-bin/send_email.py', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let response = JSON.parse(xhr.responseText);
+                    if (response.error) {
+                        document.getElementById('output').innerText = `Error: ${response.error}`;
+                    } else {
+                        document.getElementById('output').innerText = response.success;
+                    }
+                }
+            };
+            xhr.send(`sender_email=${encodeURIComponent(sender_email)}&receiver_email=${encodeURIComponent(receiver_email)}&password=${encodeURIComponent(password)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+        }
+    </script>
+</head>
+
+<body>
+    <h1 style="text-align: center;">Send an Email</h1>
+    <div id="container">
+        <input type="email" id="sender_email" placeholder="Sender Email" required><br>
+        <input type="email" id="receiver_email" placeholder="Receiver Email" required><br>
+        <input type="password" id="password" placeholder="Password" required><br>
+        <input type="text" id="subject" placeholder="Subject" required><br>
+        <textarea id="body" placeholder="Email Body" required></textarea><br>
+        <button id="btn" onclick="sendEmail()">Send Email</button>
+        <pre id="output"></pre>
+    </div>
+</body>
+
+</html>

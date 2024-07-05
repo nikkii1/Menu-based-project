@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Learning App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #191938;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background-color: #000022;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        main {
+            padding: 20px;
+        }
+        
+        #courses {
+            text-align: center;
+        }
+        
+        .course-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .course-item {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px;
+            padding: 10px;
+            width: 200px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        
+        .course-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .course-item img {
+            width: 100%;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        #course-viewer {
+            text-align: center;
+        }
+        
+        iframe {
+            width: 80%;
+            height: 600px;
+            border: none;
+            margin: 20px 0;
+        }
+        h2{
+            text-align: center;
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Online Learning App</h1>
+    </header>
+    <main>
+        <h2 style="color: #ccc;">Available Courses</h2>
+        <section id="courses">
+            
+            <div class="course-list">
+                <div class="course-item" onclick="viewCourse('course1')">
+                    <img src="assets/course-image.png" alt="Course 1">
+                    <h3>DevOps</h3>
+                </div>
+                <div class="course-item" onclick="viewCourse('course2')">
+                    <img src="assets/course2-image.png" alt="Course 2">
+                    <h3>Python</h3>
+                </div>
+                <div class="course-item" onclick="viewCourse('course3')">
+                    <img src="assets/course3-image.png" alt="Course 3">
+                    <h3>AWS Cloud</h3>
+                </div>
+            </div>
+        </section>
+        <section id="course-viewer" style="display: none;">
+            <button onclick="closeCourse()">Back to Courses</button>
+            <iframe id="course-content" src="" frameborder="0"></iframe>
+        </section>
+    </main>
+    <script>
+        function viewCourse(course) {
+            document.getElementById('courses').style.display = 'none';
+            document.getElementById('course-viewer').style.display = 'block';
+            document.getElementById('course-content').src = `courses/${course}.html`;
+        }
+        
+        function closeCourse() {
+            document.getElementById('courses').style.display = 'block';
+            document.getElementById('course-viewer').style.display = 'none';
+            document.getElementById('course-content').src = '';
+        }
+        
+    </script>
+</body>
+</html>

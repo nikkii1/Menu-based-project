@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* Header styles */
+        .header {
+            color: #0a0a0a;
+            padding: 20px 0;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header a {
+            color: #0a0a0a;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin-right: 20px;
+            border-radius: 35px;
+        }
+
+        .header a:hover {
+            color: #0a0a0a;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin-right: 20px;
+            border-radius: 35px;
+            box-shadow: 0px 18px 26px rgba(0, 0, 0, 0.7);
+            transform: scale(1.05);
+        }
+
+        /* Main content styles */
+        .content {
+            padding: 80px 20px 20px 20px; /* Adjusted padding-top from 100px to 80px */
+            text-align: center;
+            height: 90vh;
+            width: 90vw;
+            background-color: #000022;
+            margin: auto;
+            margin-top: 10vh; /* Centering vertically */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+        }
+
+        h1 {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-size: 50px;
+            font-weight: bold;
+            font-style: normal;
+            color: #fffbfb;
+            text-shadow: 2px 2px 8px #0a0a0a;
+            width: 100%;
+            margin-top: -30px; /* Added margin-top to move the h1 upward */
+        }
+
+        /* Button styles */
+        .btn {
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: rgba(85, 85, 85, 0.5);
+            color: #faf6f6;
+            border: 2px solid #0f0f0f;
+            border-radius: 50px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+            box-shadow: 0px 16px 26px rgba(0, 0, 0, 0.5);
+            width: 250px; /* Adjust width to fit 5 buttons per row */
+        }
+
+        .btn:hover {
+            background-color: rgba(85, 85, 85, 0.8);
+            box-shadow: 4px 20px 30px rgba(0, 0, 0, 0.7);
+            transform: scale(1.1);
+            border: 1px solid #f0eded;
+        }
+
+        /* Animation for buttons */
+        @keyframes btnAnimation {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Apply animation to buttons */
+        .btn.animated {
+            animation: btnAnimation 1s infinite;
+        }
+
+        body {
+            background-color: #32324e;
+        }
+
+        /* Sparkle animation */
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+
+    <!-- Main content -->
+    <div class="content">
+        <h1>MenuSparkle</h1>
+
+        <!-- Apply button styles and animation class -->
+        <button class="btn animated" onclick="notesApp()">Notes App</button>
+        <button class="btn animated" onclick="goToGoogleSearch()">Google Search</button>
+        <button class="btn animated" onclick="s3bucket()">Launch s3 Bucket</button>
+        <button class="btn animated" onclick="onlineLearning()">online Learning</button>
+        <button class="btn animated" onclick="dockerAutomation()">Docker Automation</button>
+        <button class="btn animated" onclick="htmlInterpreter()">HTML Interpreter</button>
+        <button class="btn animated" onclick="terminal()">Linux Terminal</button>
+        <button class="btn animated" onclick="currlocation()">Current location</button>
+        <button class="btn animated" onclick="sendEmail()">Send Email</button>
+        <button class="btn animated" onclick="ec2Create()">Create Instance</button>
+        <button class="btn animated" onclick="metrics()">cloudwatch Metrics</button>
+        <button class="btn animated" onclick="whatsappMessage()">Send WhatsApp</button>
+        <button class="btn animated" onclick="textToSpeech()">Text to Speech</button>
+        <button class="btn animated" onclick="iamUser()">IAM User</button>
+        <button class="btn animated" onclick="fetchContent()">Fetch Website Content</button>
+        <button class="btn animated" onclick="ramread()">RAM Read</button>
+        <button class="btn animated" onclick="terminateEc2()">Terminate Ec2</button>
+        <button class="btn animated" onclick="stopEc2()">Stop Ec2</button>
+        <button class="btn animated" onclick="ebsVolume()">Create EbsVolume</button>
+        <button class="btn animated" onclick="uploadFile()">uploadFile to s3</button>
+        <button class="btn animated" onclick="bulkEmail()">Bulk Email</button>
+        <button class="btn animated" onclick="iamRole()">Create IAM Role</button>
+        <button class="btn animated" onclick="attachPolicy()">Attach Policy</button>
+        <button class="btn animated" onclick="curlCommand()">Curl Cammand</button>
+        <button class="btn animated" onclick="createGroup()">Create Group</button>
+        <button class="btn animated" onclick="createSns()">Create SNS Topic</button>
+        <button class="btn animated" onclick="getLogs()">CloudWatch Logs</button>
+    </div>
+
+    <!-- JavaScript to handle button clicks -->
+    <script>
+        // Functions to handle button clicks
+        function notesApp() {
+            window.location.href = "notes.html";
+        }
+        function goToGoogleSearch() {
+            window.location.href = "google_search.html";
+        }
+
+        function s3bucket() {
+            window.location.href = "bucket.html";
+        }
+        function onlineLearning() {
+            window.location.href = "online-course.html";
+        }
+
+        function dockerAutomation() {
+            window.location.href = "docker.html";
+        }
+
+        function htmlInterpreter() {
+            window.location.href = "html_live_interpreter.html";
+        }
+
+        function terminal() {
+            window.location.href = "terminal.html";
+        }
+
+        function currlocation() {
+            window.location.href = "geo_location.html";
+        }
+
+        function sendEmail() {
+            window.location.href = "send_email.html";
+        }
+
+        function ec2Create() {
+            window.location.href = "create_ec2.html";
+        }
+
+        function metrics() {
+            window.location.href = "metrics.html";
+        }
+
+        function whatsappMessage() {
+            window.location.href = "whatsapp.html";
+        }
+
+        function textToSpeech() {
+            window.location.href = "text-to-speech.html";
+        }
+
+        function iamUser() {
+            window.location.href = "iam.html";
+        }
+
+        function fetchContent() {
+            window.location.href = "website-content.html";
+        }
+
+        function ramread() {
+            window.location.href = "ramread.html";
+        }
+
+        function terminateEc2() {
+            window.location.href = "termiateEc2.html";
+        }
+
+        function stopEc2() {
+            window.location.href = "stopEc2.html";
+        }
+
+        function ebsVolume() {
+            window.location.href = "ebsvolume.html";
+        }
+
+        function uploadFile() {
+            window.location.href = "uploadFile.html";
+        }
+
+        function bulkEmail() {
+            window.location.href = "bulkmail.html";
+        }
+
+        function iamRole() {
+            window.location.href = "create-role.html";
+        }
+
+        function attachPolicy() {
+            window.location.href = "attach-policy.html";
+        }
+
+        function curlCommand() {
+            window.location.href = "curl-command.html";
+        }
+
+        function createGroup() {
+            window.location.href = "create-group.html";
+        }
+
+        function createSns() {
+            window.location.href = "create_sns.html";
+        }
+
+        function getLogs() {
+            window.location.href = "cloud-logs.html";
+        }
+    </script>
+</body>
+
+</html>

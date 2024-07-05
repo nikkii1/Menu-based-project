@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Emails</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        /* Add your CSS styles here */
+        body {
+           
+            background-color:#191938;
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: auto;
+            margin-top: 50px;
+            background-color: #000022;
+            width: 50%;
+            height: 81%;
+            margin-left: 33%;
+            color: white;
+
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label,
+        input,
+        button {
+            width: 100%;
+            max-width: 300px;
+            margin: 5px 0;
+            height: 30px;
+            border-radius: 10px;
+            border: 1px solid #ebe7e7;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #555;
+            color: white;
+            height: 40px;
+            width: 120px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #333;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #faf7f7;
+        }
+        #message{
+            width: 300px;
+            border-radius: 10px;
+            border: 1px solid #0c0c0c;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('#sendEmailsForm').submit(function(event) {
+                event.preventDefault();
+
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/cgi-bin/send_bulk_emails.py',  // Replace with your CGI script URL
+                    data: formData,
+                    success: function(response) {
+                        $('#result').html(response);
+                    },
+                    error: function() {
+                        $('#result').html("Failed to send emails.");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Send Bulk Emails</h2>
+        <form id="sendEmailsForm">
+            <label for="recipients" id="label-1">Recipients (comma-separated):</label><br>
+            <input type="text" id="recipients" name="recipients" placeholder="Enter the mails"><br><br>
+
+            <label for="subject">Subject:</label><br>
+            <input type="text" id="subject" name="subject" required placeholder="subject"><br><br>
+
+            <label for="message">Message:</label><br>
+            <textarea id="message" name="message" rows="4" required placeholder="Enter your messages"></textarea><br><br>
+
+            <button type="submit">Send Emails</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+</body>
+</html>

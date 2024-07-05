@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload to S3</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        body {
+            background-color: #191938;
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+
+        .container {
+            text-align: center;
+            border: 1px solid #080808;
+            padding: 10px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            background-color: #000022;
+            height: 360px;
+            width: 300px;
+            color: white;
+        }
+
+        #bucketName{
+            border: 1px solid black;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        label,
+        input,
+        button {
+            width: 100%;
+            max-width: 300px;
+            margin: 10px 0;
+            height: 40px;
+            border-radius: 5px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            border: 1px solid #ccc;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #555;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            
+        }
+
+        button:hover {
+            background-color: #333;
+            transform: scale(1.05);
+            border: 1px solid white;
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #response {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #fdfcfc; /* Error color */
+        }
+
+        #response.success {
+            color: #fbfdfb; /* Success color */
+        }
+        h2{
+            text-align: center;
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      /* Use custom font from Google Fonts */
+      font-size: 36px;
+      /* Change font size */
+      font-weight: bold;
+      /* Change font weight */
+      font-style: normal;
+      /* Change font style */
+      color: #fdfbfb;
+      text-shadow: 2px 2px 8px #080808;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Upload File to S3</h2>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <label id="bucketForm" for="bucketName" style="color: white;">Bucket Name:</label>
+            <input type="text" id="bucketName" name="bucketName" placeholder="Enter bucket name"><br><br>
+            
+            <label for="file" style="color: white;">Select File:</label>
+            <input type="file" name="file" id="file"><br><br>
+            
+            <button type="button" onclick="uploadFile()">Upload File</button>
+        </form>
+        <div id="response"></div>
+    </div>
+
+    <script>
+        function uploadFile() {
+            var formData = new FormData();
+            formData.append('file', document.getElementById('file').files[0]);
+            formData.append('bucketName', document.getElementById('bucketName').value);
+            
+            $.ajax({
+                url: '/cgi-bin/upload_to_s3.py', // Replace with your CGI script path
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    $('#response').html(response).addClass('success');
+                },
+                error: function(xhr, status, error) {
+                    $('#response').html('Error uploading file: ' + error).removeClass('success');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

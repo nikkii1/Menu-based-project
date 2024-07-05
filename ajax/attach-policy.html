@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assign IAM Policy</title>
+    <style>
+        #button {
+            background-color: #555;
+            color: white;
+            height: 40px;
+            width: 120px;
+            border-radius: 10px;
+        }
+
+        body {
+            background-color: #191938;
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            color: white;
+        }
+
+    
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #000022;
+            color: white;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label,
+        input,
+        button {
+            width: 100%;
+            max-width: 300px;
+            margin: 10px 0;
+            height: 30px;
+            border-radius: 10px;
+        }
+
+         button:hover{
+            background-color: #333;
+            color: white;
+            transform: scale(1.1);
+         }
+        h1 {
+            text-align: center;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-size: 36px;
+            font-weight: bold;
+            font-style: normal;
+            color: #fffdfd;
+            text-shadow: 2px 2px 8px #080808;
+        }
+    </style>
+    <script>
+        function attachPolicy() {
+            var userName = document.getElementById("user_name").value;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/cgi-bin/assign_policy.py", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById("result").innerText = response.message || response.error;
+                }
+            };
+
+            var data = "user_name=" + encodeURIComponent(userName);
+            xhr.send(data);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Assign IAM Policy to User</h1>
+        <form onsubmit="attachPolicy(); return false;">
+            <label for="user_name">IAM User Name:</label>
+            <input type="text" id="user_name" name="user_name" required>
+            <button type="submit" id="button">Attach Policy</button>
+        </form>
+        <div id="result"></div>
+    </div>
+</body>
+</html>

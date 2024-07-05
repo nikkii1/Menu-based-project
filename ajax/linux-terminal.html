@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Web Terminal</title>
+    <style>
+        body {
+            background-color: #191938;
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            height: 100vh;
+            color: white;
+
+        }
+
+        #container {
+            text-align: center;
+            padding-top: 10%;
+            background-color: #000022;
+            color: white;
+            height: 50%;
+            width: 80%;
+            margin-left: 10%;
+            border-radius: 15px;
+
+
+        }
+
+        #command {
+            margin-left: 7px;
+            width: 50%;
+            height: 25px;
+            border-radius: 10px;
+        }
+        #btn{
+            background-color:#555;
+            color: #fff;
+            border: none;
+            height: 30px;
+            border-radius: 5px;
+            width: 70px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+        }
+        #btn:hover{
+            background-color:#333;
+            color: #fff;
+            border: none;
+            height: 30px;
+            border-radius: 5px;
+            width: 70px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+            transform: scale(1.1);
+        }
+
+    </style>
+    <script>
+        function executeCommand() {
+            let command = document.getElementById('command').value;
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', `/cgi-bin/terminal.py?command=${encodeURIComponent(command)}`, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let response = JSON.parse(xhr.responseText);
+                    document.getElementById('output').innerText = response.stdout + response.stderr;
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1 style="text-align: center;">Web Terminal</h1>
+    <div id="container">
+        [root@ip-172-31-21-174 ec2-user]#<input type="text" id="command" placeholder="Enter command">
+        <button id="btn" onclick="executeCommand() ">Run</button>
+        <pre id="output"></pre>
+    </div>
+
+</body>
+
+</html>

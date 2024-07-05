@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create IAM Group</title>
+    <style>
+        body {
+           background-color: #191938;
+           color: white;
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            height: 100vh;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+
+        
+        .container {
+            background-color: #000022;
+            color: white;
+            text-align: center;
+            padding-top: 50px;
+            width: 50%;
+            height: 60%;
+            margin-left: 25%;
+            margin-top: 5%;
+            border-radius: 10px;
+        }
+
+        input, select {
+            margin: 10px;
+            width: 50%;
+            height: 25px;
+            border-radius: 5px;
+            border: 1px solid #353535;
+            padding: 5px;
+        }
+
+        #btn {
+            background-color: #555;
+            color: #fff;
+            border: none;
+            height: 30px;
+            border-radius: 5px;
+            width: 150px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+        }
+
+        #btn:hover {
+            background-color: #333;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        #volume-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #volume-info h2 {
+            color: #333;
+        }
+
+        #volume-info ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #volume-info li {
+            background: rgba(255, 255, 255, 0.8);
+            margin: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            width: 90%;
+            max-width: 600px;
+        }
+    </style>
+    <script>
+        function createIAMGroup() {
+            var group_name = document.getElementById('group_name').value;
+            var region = document.getElementById('region').value;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/cgi-bin/create_iam_group.py', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById('result').innerText = response.message;
+                }
+            };
+
+            var data = 'group_name=' + encodeURIComponent(group_name) +
+                       '&region=' + encodeURIComponent(region);
+
+            xhr.send(data);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Create IAM Group</h1>
+        <form onsubmit="event.preventDefault(); createIAMGroup();">
+            <label for="group_name">Group Name:</label>
+            <input type="text" id="group_name" name="group_name" required><br><br>
+            <label for="region">Region:</label>
+            <input type="text" id="region" name="region" required><br><br>
+            <button id="btn" type="submit">Create IAM Group</button>
+        </form>
+        <p id="result"></p>
+    </div>
+</body>
+</html>

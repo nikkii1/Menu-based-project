@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Total RAM</title>
+  <style>
+    #button {
+      background-color: #555;
+      color: white;
+      height: 40px;
+      width: 120px;
+      border-radius: 10px;
+    }
+
+    body {
+      background-color: #191938;
+      color: white;
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite;
+      height: 100vh;
+    }
+    .container {
+      text-align: center;
+      padding: 20px;
+      border-radius: 10px;
+      background: none;
+      background-color: #000022;
+      color: white;
+      width: 40%;
+      height: 40%;
+      margin-left: 25%;
+      margin-top: 5%;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    label,
+    input,
+    button {
+      width: 100%;
+      max-width: 300px;
+      margin: 1px 0;
+      height: 30px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      font-size: 36px;
+      font-weight: bold;
+      color: #fffefe;
+      text-shadow: 2px 2px 8px #080808;
+    }
+
+    #form {
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      font-size: 20px;
+      font-weight: bold;
+      color: #0a0505;
+      text-shadow: 2px 2px 8px #e0cfcf;
+    }
+
+    #button:hover {
+      background-color: #333;
+      transform: scale(1.1);
+    }
+
+    #output {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      color: white;
+      
+    }
+  </style>
+</head>
+
+<body>
+  
+  <div class="container">
+    <h1>Get Total RAM</h1>
+    <form id="form">
+      <button id="button" type="button" onclick="getTotalRAM()">Get Total RAM</button>
+    </form>
+  </div>
+  <div id="output"></div>
+
+  <script>
+    function getTotalRAM() {
+      fetch('/cgi-bin/get_total_ram.py', {
+        method: 'POST'
+      })
+        .then(response => response.json())
+        .then(data => {
+          const outputDiv = document.getElementById('output');
+          if (data.total_ram) {
+            outputDiv.textContent = `Total RAM: ${data.total_ram} GB`;
+          } else if (data.error) {
+            outputDiv.textContent = `Error: ${data.error}`;
+          }
+        })
+        .catch(error => {
+          const outputDiv = document.getElementById('output');
+          outputDiv.textContent = `Error: ${error}`;
+        });
+    }
+  </script>
+</body>
+</html>
