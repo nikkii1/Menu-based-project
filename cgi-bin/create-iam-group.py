@@ -6,8 +6,8 @@ import cgi
 import cgitb
 
 # Hardcoded AWS credentials (for demo purposes only)
-ACCESS_KEY_ID = 'AKIARBK7BRBVRR56TL7E'
-SECRET_ACCESS_KEY = 'QVIfTKQkS2RrRMoHENhK2sj419hDCTgHLQXrYayp'
+ACCESS_KEY_ID = 'your key'
+SECRET_ACCESS_KEY = 'your secret key'
 
 # Enable detailed error messages to be shown in the browser
 cgitb.enable()

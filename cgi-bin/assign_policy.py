@@ -18,8 +18,8 @@ def main():
     user_name = form.getvalue('user_name')
 
     # Define AWS credentials and region (ideally, these should be set via environment variables)
-    aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID', 'AKIARBK7BRBVRR56TL7E')
-    aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY', 'QVIfTKQkS2RrRMoHENhK2sj419hDCTgHLQXrYayp')
+    aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID', 'your key')
+    aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY', 'your secret key')
     region_name = os.environ.get('AWS_REGION', 'ap-south-1')
 
     policy_arn = 'arn:aws:iam::aws:policy/AmazonEC2FullAccess'

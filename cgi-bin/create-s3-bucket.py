@@ -13,7 +13,7 @@ def main():
     print()  # End of headers
 
     form = cgi.FieldStorage()
-    
+
     bucket_name = form.getvalue('bucket_name')
     region = form.getvalue('region')
     aws_access_key_id = form.getvalue('aws_access_key_id')
@@ -31,12 +31,12 @@ def main():
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key
         )
-        
+
         s3_client.create_bucket(
             Bucket=bucket_name,
             CreateBucketConfiguration={'LocationConstraint': region}
         )
-        
+
         response = {"message": f"Bucket '{bucket_name}' created successfully in region '{region}'"}
         print(json.dumps(response))
 

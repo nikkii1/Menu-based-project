@@ -36,9 +36,9 @@ def main():
     form = cgi.FieldStorage()
     topic_name = form.getvalue('topic_name')
     region = form.getvalue('region')
-    aws_access_key_id = 'AKIARBK7BRBVRR56TL7E'  # Hardcoded for demo, secure handling in prod
-    aws_secret_access_key = 'QVIfTKQkS2RrRMoHENhK2sj419hDCTgHLQXrYayp'  # Hardcoded for demo, secure handling in prod
-
+    aws_access_key_id = "YOUR_ACCESS_KEY"
+    aws_secret_access_key = "YOUR_SECRET_KEY"
+ 
     # Create SNS topic
     result = create_sns_topic(topic_name, region, aws_access_key_id, aws_secret_access_key)
 

@@ -8,8 +8,8 @@ import cgitb
 cgitb.enable(display=0, logdir="/path/to/logdir")  # Enable debugging to a log file
 
 # Hard-coded AWS credentials (not recommended for production)
-AWS_ACCESS_KEY_ID = 'AKIARBK7BRBV3ESZWWM7'
-AWS_SECRET_ACCESS_KEY = '6gAFx8qwzrCTpesJrrAIOcIz8/3JKd5bo2ys+nQj'
+AWS_ACCESS_KEY_ID = 'your key'
+AWS_SECRET_ACCESS_KEY = '6your secret key'
 
 print("Content-Type: application/json")
 print()
